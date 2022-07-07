@@ -3,10 +3,10 @@ height:500px;
 width: 1000px;
 
 }
-#emailerror{
+.emailerror{
     color: red;
 }
-#passerror{
+.passerror{
     color:red;
 }
 #moberror{
