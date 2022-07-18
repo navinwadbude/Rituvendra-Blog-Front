@@ -1,19 +1,23 @@
 import { useState } from 'react'
 import react from 'react'
-
+import axios from "axios"
 import img2 from "../images/bodypic.jpg"
-import { Link } from 'react-router-dom'
-
+import { Link,useNavigate } from 'react-router-dom'
+import jwt_decode from 'jwt-decode';
 import {
   isEmailValidation,
   isPasswordValidation
 } from '../utils/utils'
 
 export default function LoginBody() {
+  const [Succes, setSucces] = useState();
+
   const [email, setemail] = useState({
     value: "",
     emailerror: ""
   })
+  const navigate = useNavigate();
+
 
   const [password, setpassword] = useState({
     value: "",
@@ -23,11 +27,30 @@ export default function LoginBody() {
     email: "",
     password: ""
   })
-
-
+  
+  
   const validateform = (e) => {
     e.preventDefault()
-
+    
+    const obj={
+      email:email.value,
+      password:password.value
+    }
+    axios.post("http://localhost:3000/api/controller/login",obj)
+    .then(async(response)=>{
+      const token=response.data.accessToken
+      console.log(token)
+      const decodedToken= await jwt_decode(token);
+      console.log(decodedToken)
+      console.log(response)
+      setSucces(response.data.message)
+      localStorage.setItem("accessItem",token)
+      navigate("/home", { replace: true, useData: response.data, state: token });
+    })
+    .catch((error) => {
+      console.log(error.message,);
+      setSucces(error.message);
+    });
   }
   const handleEmail = (event) => {
     setemail({
@@ -39,12 +62,11 @@ export default function LoginBody() {
     setpassword({
       value: event.target.value,
       passerror: isPasswordValidation(event.target.value,)
-        ? "password must greater than 6"
-        : "",
+      ? "password must greater than 6"
+      : "",
     });
   };
-
-
+  
   return (
     <>
       <ul>
@@ -60,7 +82,9 @@ export default function LoginBody() {
       <div className='container' >
         <img src={img2} alt="" />
         <form className='container' onSubmit={validateform} name="myForm">
+         <span style={{ color: "red" }}>{Succes}</span>
           <div className="mb-3 ">
+
             <label for="InputEmail" className="form-label">Email address</label>
             <input type="email" name='email' onChange={(event) => handleEmail(event)} value={email.value} className="form-control" id="InputEmail" aria-describedby="emailHelp" />{error && <span className='emailerror' id=''></span>}
 
@@ -76,6 +100,7 @@ export default function LoginBody() {
           </div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+       
       </div>
 
     </>

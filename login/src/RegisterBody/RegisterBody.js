@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import { Link } from 'react-router-dom'
 import img1 from "../images/software.jpg"
+import axios from "axios"
 import {
   isEmailValidation,
   isPasswordValidation,
@@ -10,49 +11,40 @@ import {
 
 
 export default function RegisterBody() {
+
   const [email, setemail] = useState({
     value: "",
     emailerror: ""
   })
-
-
-
-  const [password, setpassword] = useState({
+const [password, setpassword] = useState({
     value: "",
     passerror: ""
   })
 
 
-  const [username, setusername] = useState({
+const [username, setusername] = useState({
     value: "",
     usererror: ""
   })
-
-
-  const [cpassword, setCpassword] = useState({
+const [cpassword, setCpassword] = useState({
     value: "",
     errorEm: "",
   });
-
-  const handleEmail = (event) => {
+const handleEmail = (event) => {
     setemail({
       value: event.target.value,
       emailerror: isEmailValidation(event.target.value) ? "invalid email" : "",
     });
   }
-
-
-  const handlePassword = (event) => {
+const handlePassword = (event) => {
     setpassword({
       value: event.target.value,
-      passerror: isPasswordValidation(event.target.value,)
+      passerror: isPasswordValidation(event.target.value)
         ? "password must include one uppercase and one number"
         : "",
     });
   };
-
-
-  const handleUsername = (event) => {
+const handleUsername = (event) => {
     setusername({
       value: event.target.value,
       usererror: isusernameValidation(event.target.value,)
@@ -71,14 +63,30 @@ export default function RegisterBody() {
         : "not match",
     });
   };
+ 
 
-  const validateform = (e) => {
+ 
 
+  const validateform = async (e) => {
     e.preventDefault()
-}
+    const obj={
+      email:email.value,
+      password:password.value,
+      username:username.value,
+      cpassword:cpassword.value
+    }
+    
 
 
-  return (
+     axios.post("http://localhost:3000/api/controller/register", obj)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error.data.message,);
+      });
+  }
+return (
     <>
       <ul>
         <li>
@@ -94,7 +102,9 @@ export default function RegisterBody() {
         <img src={img1} className="bodypic"
           alt="" />
         <form className='container' onSubmit={validateform} name="myForm">
+        <span style={{ color: "red" }}>{Succes}</span>
           <div className="mb-3 ">
+
             <label for="InputEmail" className="form-label">Email address</label>
             <input type="text" name='email' onChange={(event) => handleEmail(event)} value={email.value} className="form-control" id="InputEmail" aria-describedby="emailHelp" />
             <span id='emailerror'>{email.emailerror}</span>
@@ -116,18 +126,15 @@ export default function RegisterBody() {
 
           <div className="mb-3">
             <label for="InputName" className="form-label">Confirm Password</label>
-            <input type="text" name='username' value={cpassword.value} className="form-control" onChange={(event) => handleConfirmPassword(event)} id="InputName" />
+            <input type="text" name='cpassword' value={cpassword.value} className="form-control" onChange={(event) => handleConfirmPassword(event)} id="InputName" />
             <span className='passerror'>{cpassword.errorEm}</span>
 
           </div>
 
-          <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input" id="exampleCheck1" name='submit' />
-            <label className="form-check-label" for="exampleCheck1">Check me out</label>
-          </div>
 
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+        
       </div>
 
     </>
