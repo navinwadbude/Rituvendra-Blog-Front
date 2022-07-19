@@ -10,7 +10,7 @@ function App() {
  <Routes>
 <Route path="/" exact element={<RegisterBody />}></Route>
 <Route path="/login" exact element={<LoginBody />}></Route>
-<Route path="/home" element={<Home />} />
+<Route path="/home" exact element={<Home />} />
 
 </Routes>
 </div>

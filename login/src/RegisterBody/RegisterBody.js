@@ -11,6 +11,7 @@ import {
 
 
 export default function RegisterBody() {
+  const [Success,setSucces]=useState("")
 
   const [email, setemail] = useState({
     value: "",
@@ -102,7 +103,7 @@ return (
         <img src={img1} className="bodypic"
           alt="" />
         <form className='container' onSubmit={validateform} name="myForm">
-        <span style={{ color: "red" }}>{Succes}</span>
+        <span style={{ color: "red" }}>{Success}</span>
           <div className="mb-3 ">
 
             <label for="InputEmail" className="form-label">Email address</label>

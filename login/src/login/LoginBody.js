@@ -10,7 +10,7 @@ import {
 } from '../utils/utils'
 
 export default function LoginBody() {
-  const [Succes, setSucces] = useState();
+  const [Success, setSucces] = useState();
 
   const [email, setemail] = useState({
     value: "",
@@ -82,7 +82,7 @@ export default function LoginBody() {
       <div className='container' >
         <img src={img2} alt="" />
         <form className='container' onSubmit={validateform} name="myForm">
-         <span style={{ color: "red" }}>{Succes}</span>
+         <span style={{ color: "red" }}>{Success}</span>
           <div className="mb-3 ">
 
             <label for="InputEmail" className="form-label">Email address</label>

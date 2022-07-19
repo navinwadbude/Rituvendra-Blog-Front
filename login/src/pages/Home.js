@@ -6,9 +6,9 @@ const Home = () => {
 
 
  
+  const detail = data.state;
   const data = useLocation();
   const dec = jwt_decode(detail);
-  const detail = data.state;
  
 
   useEffect(() => {
