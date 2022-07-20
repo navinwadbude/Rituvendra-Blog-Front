@@ -1,0 +1,17 @@
+.bodypic{
+height:500px;
+width: 1000px;
+
+}
+#emailerror{
+    color: red;
+}
+.passerror{
+    color:red;
+}
+#moberror{
+    color:red;
+}
+#nameerror{
+    color:red;
+}
