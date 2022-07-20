@@ -1,20 +1,23 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useLocation } from "react-router-dom";
+import {
+  REACT_GET_USER_DATA
+} from '../utils/utils'
 const Home = () => {
 
 
+  const data = useLocation();
  
   const detail = data.state;
-  const data = useLocation();
   const dec = jwt_decode(detail);
  
 
   useEffect(() => {
     
      axios
-    .get("http://localhost:3000/getUserData", {
+    .get(REACT_GET_USER_DATA, {
       headers: { Authorization: `Bearer ${detail}` },
     })
     .then((res) => {

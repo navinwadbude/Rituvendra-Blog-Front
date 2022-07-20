@@ -1,3 +1,8 @@
+export const REACT_LOGIN_BASE_URL="http://localhost:3000/api/controller/login"
+export const REACT_REGISTER_BASE_URL="http://localhost:3000/api/controller/register"
+export const REACT_GET_USER_DATA="http://localhost:3000/getUserData"
+
+
 export const handleSubmitCheck = (values, setError) => {
   let error = {};
   const { cpassword, email, password, username } = values;
