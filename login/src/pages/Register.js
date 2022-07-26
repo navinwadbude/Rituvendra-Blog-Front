@@ -14,6 +14,9 @@ import {
 
 export default function RegisterBody() {
   const [Success, setSucces] = useState("")
+  // const history = useHistory();
+  const [msg, setMsg] = useState('');
+
 
   const [email, setemail] = useState({
     value: "",
@@ -83,23 +86,28 @@ export default function RegisterBody() {
 
   const validateform = async (e) => {
     e.preventDefault()
-    const obj = {
-      email: email.value,
-      password: password.value,
-      username: username.value,
-      cpassword: cpassword.value
+    
+
+
+
+  try {
+    await axios.post(REACT_REGISTER_BASE_URL, {
+        username: username,
+        email: email,
+        password: password,
+    });
+    // history.push("/");
+} catch (error) {
+    if (error.response) {
+        setMsg(error.response.data.msg);
     }
+}
+  
 
-
-
-    axios.post(REACT_REGISTER_BASE_URL, obj)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error.data.message,);
-      });
-  }
+  
+}
+    
+  
   return (
     <>
       <ul>

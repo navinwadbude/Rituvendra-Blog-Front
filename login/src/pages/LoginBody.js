@@ -32,31 +32,28 @@ export default function LoginBody() {
     email: "",
     password: ""
   })
+  // const history = useHistory();
+
 
 
 
   const validateform = (e) => {
     e.preventDefault()
 
-    const obj = {
-      email: email.value,
-      password: password.value
-    }
-    axios.post(REACT_LOGIN_BASE_URL, obj)
-      .then(async (response) => {
-        const token = response.data.accessToken
-        // console.log(token)
-        // const decodedToken = await jwt_decode(token);
-        // console.log(decodedToken)
-        // console.log(response)
-        setSucces(response.data.message)
-        localStorage.setItem("accessItem", token)
-        navigate("/home", { replace: true, useData: response.data, state: token });
+    try{
+      const user=axios.post(REACT_LOGIN_BASE_URL,{
+        email:email,
+        password:password
       })
-      .catch((error) => {
-        console.log(error.message,);
-        setSucces(error.message);
-      });
+      localStorage.setItem("accessItem", user.data.accesstoken)
+      // history.push("/home")
+    }
+    catch(error) {
+      console.log(error.message);
+      setSucces(error.message);
+    };
+    
+      
   }
 
   const handleEmail = (event) => {
