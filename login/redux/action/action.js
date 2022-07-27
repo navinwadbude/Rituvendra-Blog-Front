@@ -5,13 +5,14 @@ const apiAction = (obj) => {
   return (dispatch)=>{
     axios
       .post(`${REACT_REGISTER_BASE_URL}/signup`, obj)
-      .then((res) => {
+      .then((response) => {
         dispatch({
             type:"REACT_REGISTER_BASE_URL",
-            payload:res
+            payload:response
         })
       })
       .catch((error) => {
+        console.log(error)
       });
   }
 }

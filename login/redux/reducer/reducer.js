@@ -1,12 +1,17 @@
+import { type } from 'express/lib/response'
 import React from 'react'
 const initialState={}
-const apiReducer = (state=initialState,action) => {
-    const {type,payload}=action
-    switch (type) {
+const rootReducer = (state=initialState,action) => {
+    switch (type.action) {
         case "REACT_REGISTER_BASE_URL":
            return {...payload.data}
-        default:
-           return initialState;
+        } 
+        switch(type.action){
+            case "TYPE_REACT_REGISTER_BASE_URL":
+                return{...payload.data}
+                
+      default:
+          return state
     }
 }
-export {apiReducer}
+export {rootReducer}
